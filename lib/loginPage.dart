@@ -42,15 +42,6 @@ class _LoginPage extends State<LoginPage>{
      });
    }
 
-   void goToRegisterPage(BuildContext context){
-
-        Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) =>  RegisterPage(),
-            ));
-
-   }
-
          @override
          Widget build(BuildContext context) {
 
@@ -69,7 +60,7 @@ class _LoginPage extends State<LoginPage>{
        registerButton =  ElevatedButton(onPressed: (){
          Navigator.push(
              context,
-             MaterialPageRoute(builder: (context) =>  RegisterPage(),
+             MaterialPageRoute(builder: (context) => const RegisterPage(),
              ));
 
        },style:ElevatedButton.styleFrom(
