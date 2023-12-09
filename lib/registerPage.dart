@@ -32,6 +32,8 @@ class _RegisterPage extends State<RegisterPage>{
 
     late TextField usernameInput;
     late TextField passwordInput;
+    late TextField nameInput;
+    late TextField surnameInput;
 
     late Title pageTitle;
 
@@ -57,22 +59,29 @@ class _RegisterPage extends State<RegisterPage>{
       passwordInput = const TextField(
           decoration:InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your Password'),
           obscureText: true);
+    nameInput = const TextField(
+        decoration:InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your Name'));
+    surnameInput = const TextField(
+        decoration:InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your  Surname'));
+    passwordInput = const TextField(
+        decoration:InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your Password'),
+        obscureText: true);
 
 
-      loginButton =  ElevatedButton(onPressed: loginViaInput, style:ElevatedButton.styleFrom(
-          primary: Colors.green,onPrimary: Colors.white
+      registerButton =  ElevatedButton(onPressed: loginViaInput, style:ElevatedButton.styleFrom(
+          primary: Colors.blue,onPrimary: Colors.white
       ),child:const Text('register'));
 
-      registerButton =  ElevatedButton(onPressed: (){
+      loginButton =  ElevatedButton(onPressed: (){
         Navigator.pop(
             context
         );
         },style:ElevatedButton.styleFrom(
           backgroundColor:  Colors.transparent,foregroundColor: Colors.black,shadowColor: Colors.transparent ,surfaceTintColor:Colors.transparent
-      ),child:const Text('register',style: TextStyle(decoration: TextDecoration.underline,)));
+      ),child:const Text('login',style: TextStyle(decoration: TextDecoration.underline,)));
 
 
-      buttonsColumn = Column(children: [loginButton,registerButton]);
+      buttonsColumn = Column(children: [registerButton,loginButton]);
 
       pageTitle = Title(color: Colors.blue, child: const Text('CallTrack',style:TextStyle(color: Colors.blue,fontSize: 30,fontFamily: "Times New Roman",
           fontWeight: FontWeight.w800)));
