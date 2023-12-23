@@ -94,6 +94,53 @@ class _InitialUserInfoPage extends State<InitialUserInfoPage>{
   late Container heightcontainer ;
 
 
+  //ACTIVITY
+  late Text dailyActivityFrequencyLabel;
+  List<String> activityList = <String>[
+    "Little or no exercise",
+    "1 - 3 days exercise",
+    "3 - 5 days exercise",
+    "6 - 7 days exercise",
+    "Long and heavy exercise each day"
+  ];
+  late DropdownButton<String> activityButton;
+  late String initialActivity = activityList.first;
+  late Column activityColumn;
+  late Container activitycontainer;
+  double activityLevel = 1.2;
+  void changeActivity(String? value){
+    setState(() {
+      initialActivity = value!;
+      if(value == activityList.first) {
+        activityLevel = 1.2;
+      }
+      if(value == activityList[1]) {
+        activityLevel = 1.375;
+      }
+      if(value == activityList[2]) {
+        activityLevel = 1.55;
+      }
+      if(value == activityList[3]) {
+        activityLevel = 1.725;
+      }
+      if(value == activityList[4]) {
+        activityLevel = 1.9;
+      }
+
+    });
+  }
+
+
+  // TARGET
+  late RadioListTile looseWeight;
+  late RadioListTile gainWeight ;
+  late Row radioButtonRow;
+  late Text targetSelectionLabel;
+  late String target = "-";
+  late Column targetColumn;
+  late Container targetcontainer;
+
+
   @override
   initState() {
     super.initState();
@@ -225,34 +272,79 @@ class _InitialUserInfoPage extends State<InitialUserInfoPage>{
     heightRow = Row( mainAxisAlignment: MainAxisAlignment.center,children: [heightCMButton,cmLabel],);
     Column hCol = Column(children: [hLabel,heightRow],);
 
+    // ACTIVITY
+    dailyActivityFrequencyLabel = const Text("Weekly Activity ",style:TextStyle(color:Colors.blue,fontSize:20,fontWeight: FontWeight.w600,
+        decoration: TextDecoration.underline),);
+    Container activityLabelCont = Container(margin: const EdgeInsets.fromLTRB(0, 20, 0, 20),child: dailyActivityFrequencyLabel,);
+
+    activityButton = DropdownButton(value: initialActivity,onChanged:changeActivity,
+      items: activityList.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+    activityColumn = Column(children: [dailyActivityFrequencyLabel,activityButton],);
+
+    // TARGET
+    looseWeight = RadioListTile(
+        title: const Text("Loose\nWeight"),
+        value: "-",
+        groupValue: target,
+        onChanged: (value){
+          setState(() {
+            target = value.toString();
+
+          });
+        }
+    );
+    gainWeight = RadioListTile(
+        title: const Text("Gain\nWeight"),
+        value: "+",
+        groupValue: target,
+        onChanged: (value){
+          setState(() {
+            target = value.toString();
+          });
+        }
+    );
+    radioButtonRow = Row(children: [Flexible(child: Container(margin:const EdgeInsets.fromLTRB(0,0,0, 20),child: looseWeight),),
+      Flexible(child: Container(margin:const EdgeInsets.fromLTRB(0,0,0, 15),child: gainWeight))],);
+    targetSelectionLabel = const Text("Target ",style:TextStyle(color:Colors.blue,fontSize:20,fontWeight: FontWeight.w600,
+        decoration: TextDecoration.underline),);
+    targetColumn = Column(children: [targetSelectionLabel,radioButtonRow],);
+
 
     // APLY BUTTON
     applybutton =  ElevatedButton(onPressed: (){
       Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) =>   TargetPage(),
+          MaterialPageRoute(builder: (context) =>   const TargetPage(),
           ));
     }, style:ElevatedButton.styleFrom(
         backgroundColor: Colors.green,foregroundColor: Colors.white
     ),child:const Text('Apply'));
 
     // CONTAINERS
-    gendercontainer = Container(margin: const EdgeInsets.fromLTRB(0,20,0, 0),child:genderCol);
-    agecontainer= Container(child: ageColumn);
-    masscontainer = Container(child:massCol);
-    heightcontainer = Container(child: hCol,);
-    applycontainer = Container(child: applybutton,);
+    gendercontainer = Container(margin:const EdgeInsets.fromLTRB(0,40,0, 0),child:genderCol);
+    agecontainer= Container(margin:const EdgeInsets.fromLTRB(0,20,0, 0),child: ageColumn);
+    masscontainer = Container(margin:const EdgeInsets.fromLTRB(0,30,0, 0),child:massCol);
+    heightcontainer = Container(margin:const EdgeInsets.fromLTRB(0,30,0, 0),child: hCol,);
+    activitycontainer =  Container(margin:const EdgeInsets.fromLTRB(0,30,0, 0),child: activityColumn,);
+    targetcontainer = Container(margin:const EdgeInsets.fromLTRB(0,30,0, 0),child: targetColumn,);
+    applycontainer = Container(margin:const EdgeInsets.fromLTRB(0,30,0, 30),child: applybutton,);
 
 
 
     // OUTER COLUMN
-    column =   Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    column =   Column(mainAxisAlignment: MainAxisAlignment.center,
         children: [
           gendercontainer,agecontainer,masscontainer
-        ,heightcontainer,applycontainer]);
+        ,heightcontainer,activitycontainer,targetcontainer,applycontainer]);
 
     //OUTER CENTER
-    baseCenter = Center(child:column,);
+    baseCenter = Center(child:SingleChildScrollView(child: column,),);
 
     // TITLE & APPBAR
     title = Title(color: Colors.blue, child: const Text('CallTrack',style:TextStyle(color: Colors.green,fontSize: 30,fontFamily: "Times New Roman",
