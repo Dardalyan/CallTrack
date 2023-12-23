@@ -1,5 +1,7 @@
+import 'package:caltrack/initialUserInfo.dart';
 import 'package:caltrack/mainPage.dart';
 import 'package:caltrack/registerPage.dart';
+import 'package:caltrack/userTargetPage.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget{
@@ -40,7 +42,7 @@ class _LoginPage extends State<LoginPage>{
    void loginViaInput(){
      Navigator.push(
          context,
-         MaterialPageRoute(builder: (context) => const MainPage(),
+         MaterialPageRoute(builder: (context) =>  const MainPage(),
          ));
    }
 
@@ -69,7 +71,7 @@ class _LoginPage extends State<LoginPage>{
 
       // LOGIN & REGISTER BUTTONS
        loginButton =  ElevatedButton(onPressed: loginViaInput, style:ElevatedButton.styleFrom(
-           primary: Colors.green,onPrimary: Colors.white
+           backgroundColor: Colors.green,foregroundColor: Colors.white
        ),child:const Text('login'));
 
        registerButton =  ElevatedButton(onPressed: getRegisterPage,style:ElevatedButton.styleFrom(
