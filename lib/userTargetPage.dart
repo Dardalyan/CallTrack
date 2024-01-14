@@ -45,6 +45,8 @@ class _TargetPage extends State<TargetPage>{
   late double cal=0.0;
   late double sliderValue=cal;
 
+
+  // Get Calorie Method That Gets User's Calorie From Endpoint
   void getCalorie() async{
     setState(() {
       loading = true;

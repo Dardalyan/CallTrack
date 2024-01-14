@@ -5,7 +5,7 @@ late String token ;
 
 Future<http.Response> register(String name,String surname,String email,String password) {
   return http.post(
-    Uri.parse('http://localhost:3000/caltrack/create/user'),
+    Uri.parse('https://calltrack-endpoints-2ea5359f9a9c.herokuapp.com/caltrack/create/user'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
@@ -22,7 +22,7 @@ Future<http.Response> register(String name,String surname,String email,String pa
 
 Future<http.Response> login(String email,String password)  {
   return  http.post(
-    Uri.parse('http://localhost:3000/caltrack/login'),
+    Uri.parse('https://calltrack-endpoints-2ea5359f9a9c.herokuapp.com/caltrack/login'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
@@ -37,7 +37,7 @@ Future<http.Response> login(String email,String password)  {
 Future<http.Response> updateInfo(double weight,int height,String target,String gender,int age, String activity,double neededCal) {
 
   return http.post(
-    Uri.parse('http://localhost:3000/caltrack/update/personalInfo'),
+    Uri.parse('https://calltrack-endpoints-2ea5359f9a9c.herokuapp.com/caltrack/update/personalInfo'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
@@ -58,7 +58,7 @@ Future<http.Response> updateInfo(double weight,int height,String target,String g
 
 Future<http.Response> specifyCal(double calorie) {
   return http.post(
-    Uri.parse('http://localhost:3000/caltrack/update/personalInfo'),
+    Uri.parse('https://calltrack-endpoints-2ea5359f9a9c.herokuapp.com/caltrack/update/personalInfo'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
@@ -71,7 +71,7 @@ Future<http.Response> specifyCal(double calorie) {
 
 Future<http.Response> addFood(String cat,String foodName,int amount,dynamic calorie) {
   return http.post(
-    Uri.parse('http://localhost:3000/caltrack/add/food'),
+    Uri.parse('https://calltrack-endpoints-2ea5359f9a9c.herokuapp.com/caltrack/add/food'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
@@ -88,7 +88,7 @@ Future<http.Response> addFood(String cat,String foodName,int amount,dynamic calo
 
 Future<http.Response> removeFood(dynamic food) {
   return http.delete(
-    Uri.parse('http://localhost:3000/caltrack/delete/food'),
+    Uri.parse('https://calltrack-endpoints-2ea5359f9a9c.herokuapp.com/caltrack/delete/food'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
@@ -101,7 +101,7 @@ Future<http.Response> removeFood(dynamic food) {
 
 Future<http.Response> resetFoodProgress() {
   return http.get(
-    Uri.parse('http://localhost:3000/caltrack/reset/food-progress'),
+    Uri.parse('https://calltrack-endpoints-2ea5359f9a9c.herokuapp.com/caltrack/reset/food-progress'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
@@ -113,12 +113,9 @@ Future<http.Response> resetFoodProgress() {
 
 
 
-
-
-
 Future<http.Response> currentInfo() {
   return http.get(
-    Uri.parse('http://localhost:3000/caltrack/get/info'),
+    Uri.parse('https://calltrack-endpoints-2ea5359f9a9c.herokuapp.com/caltrack/get/info'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',
@@ -129,7 +126,7 @@ Future<http.Response> currentInfo() {
 
 Future<http.Response> getAllFood() {
   return http.post(
-    Uri.parse('http://localhost:3000/caltrack/get/allFood'),
+    Uri.parse('https://calltrack-endpoints-2ea5359f9a9c.herokuapp.com/caltrack/get/allFood'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'Accept': 'application/json',

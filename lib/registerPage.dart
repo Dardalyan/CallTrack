@@ -51,8 +51,10 @@ class _RegisterPage extends State<RegisterPage>{
   late Title pageTitle;
 
 
+  // Register function
   void registerNewUSer()async{
 
+    // Field Controls
     if(name != "" && surname != "" && email != "" && password != ""){
       if(password != password2){
         showDialog(context: context, builder: (BuildContext context) {
@@ -118,6 +120,7 @@ class _RegisterPage extends State<RegisterPage>{
       if(password == password2){
         if(password.length >= 6){
           if(email.contains('@')){
+            // MY REGISTER FUNCTION THAT SENDS A REQUEST OUR REGISTER ENDPOINT
             Response response = await register(name, surname, email, password);
             if(response.statusCode == 200){
               Navigator.push(

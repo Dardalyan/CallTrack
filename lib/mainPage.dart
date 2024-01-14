@@ -47,7 +47,7 @@ class _MainPage extends State<MainPage>{
   late Column outColumn;
 
 
-
+  // Arrange method before loading full screen
   void arrangePageInfo()async {
     setState(() {
       loading = true;
@@ -75,9 +75,7 @@ class _MainPage extends State<MainPage>{
    }
   }
 
-
-
-
+  // init state method
   @override
   void initState() {
     super.initState();
@@ -95,7 +93,6 @@ class _MainPage extends State<MainPage>{
       onPressed: () { Navigator.pop(context);},
     );
 
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: const Text("Alert"),
       content: const Text("You have already exceeded your calorie target !"),
@@ -104,6 +101,8 @@ class _MainPage extends State<MainPage>{
       ],
     );
 
+
+    // Check whether there is a food at least.
     if(myFoodList.isNotEmpty){
 
       myFoodColumn = Column(
@@ -153,6 +152,8 @@ class _MainPage extends State<MainPage>{
       );
     }
 
+
+    // appbar
     appBar = AppBar(
 
       title: const Text('CallTrack', style:TextStyle( color:Colors.white)),
@@ -196,6 +197,8 @@ class _MainPage extends State<MainPage>{
 
     );
 
+
+    // Percentage indicator
     indicator = LinearPercentIndicator( //leaner progress bar
       animation: true,
       animationDuration: 1000,
@@ -214,6 +217,7 @@ class _MainPage extends State<MainPage>{
     );
     indicatorContainer = Container(margin:const  EdgeInsets.fromLTRB(0,20,0, 30),child: indicator,);
 
+    // Add BUTTON and Its Container
     addFoodButton = ElevatedButton(onPressed: (){
       if(currentCal >= targetCal){
         showDialog(context: context, builder: (BuildContext context) {
@@ -231,9 +235,10 @@ class _MainPage extends State<MainPage>{
     addFoodContainer = Container(child: addFoodButton,);
 
 
-
+    // Outter Column
     outColumn = Column(children: [indicatorContainer,addFoodContainer],);
 
+    // Change Column Children If list is not empty
     if(myFoodList.isNotEmpty){
       resetButton = ElevatedButton(onPressed: ()async{
         Response response = await resetFoodProgress();
@@ -263,6 +268,7 @@ class _MainPage extends State<MainPage>{
 
     }
 
+    // OUTER Center Widget
     outCenter = Center(child: Column(children: [SingleChildScrollView(child: outColumn,),],));
 
 

@@ -141,6 +141,8 @@ class _InitialUserInfoPage extends State<InitialUserInfoPage>{
   late Column targetColumn;
   late Container targetcontainer;
 
+
+  // GET INFO METHOD WHICH IS USED IN INITSTATE() METHOD
   void getInfo()async{
     loading = true;
     Response response = await currentInfo();
@@ -230,7 +232,7 @@ class _InitialUserInfoPage extends State<InitialUserInfoPage>{
 
   }
 
-
+  // REAL FORMULA - CALCULATION OF YOUR CALORIE THAT YOU CAN BURN IN A DAY
   double calculateInitialCalBurn(double kg, dynamic cm,dynamic age,String activity){
     double bmr =66.5+(13.75*kg)+(5.0003*cm)-(6.775*age);
     double acticityCoefficient = 0;

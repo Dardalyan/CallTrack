@@ -75,6 +75,7 @@ class _SelectFood extends State<SelectFood>{
   }
 
 
+  // Update MealCalorie and Chosen Meal
   void updateChoice(String? category)async{
     setState((){
       chosenMeal = category!;
@@ -131,7 +132,7 @@ class _SelectFood extends State<SelectFood>{
         ),
       );
 
-// CATEGORY
+      //  Dropdown Button  For Food Selection
       Text foodLabel = const Text("Select Your Meal",style:TextStyle(color:Colors.blue,fontSize:20,fontWeight: FontWeight.w600,
           decoration: TextDecoration.underline),);
       mealButton = DropdownButton(value:chosenMeal,onChanged: updateChoice,
@@ -142,9 +143,9 @@ class _SelectFood extends State<SelectFood>{
           );
         }).toList(),
       );
-      Column categoryColumn = Column(children: [foodLabel,mealButton],);
+      Column mealColumn = Column(children: [foodLabel,mealButton],);
 
-
+      // Amount Arrangment
       Text amountLabel = const Text("Select Amount Of Your Meal",style:TextStyle(color:Colors.blue,fontSize:20,fontWeight: FontWeight.w600,
           decoration: TextDecoration.underline),);
       mealAmountField = TextField(
@@ -171,7 +172,7 @@ class _SelectFood extends State<SelectFood>{
         ],
       )],);
 
-
+      // According to Amount It  Shows How much calorie we will get
       Text calorieLabel = const Text("Meal's Calorie",style:TextStyle(color:Colors.blue,fontSize:20,fontWeight: FontWeight.w600,
           decoration: TextDecoration.underline),);
       Column calorieColumn = Column(children: [calorieLabel,Row(mainAxisAlignment: MainAxisAlignment.center,
@@ -180,7 +181,7 @@ class _SelectFood extends State<SelectFood>{
       )],);
 
 
-
+      // Apply Button
       ElevatedButton applyButton = ElevatedButton(onPressed: ()async{
         Response response = await currentInfo();
         var jsonResponse = jsonDecode(response.body);
@@ -220,11 +221,13 @@ class _SelectFood extends State<SelectFood>{
 
       }, child: const Text("Apply"));
 
+
+      // outer Column
       outColumn = Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [categoryColumn,mealAmountColumn,calorieColumn,applyButton],);
+        children: [mealColumn,mealAmountColumn,calorieColumn,applyButton],);
 
-
+      // Outer Center
       outCenter = Center(child: outColumn,);
 
 
