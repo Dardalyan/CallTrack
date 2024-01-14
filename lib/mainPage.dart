@@ -124,7 +124,6 @@ class _MainPage extends State<MainPage>{
                       };
                     });
                     Response response = await removeFood(deletedFood);
-                    print(response.statusCode);
                     if(response.statusCode == 401){
                       Navigator.push(
                           context,
@@ -269,13 +268,13 @@ class _MainPage extends State<MainPage>{
     }
 
     // OUTER Center Widget
-    outCenter = Center(child: Column(children: [SingleChildScrollView(child: outColumn,),],));
+    outCenter = Center(child: Column(mainAxisAlignment: MainAxisAlignment.start,children: [SingleChildScrollView(child: outColumn,),],));
 
 
 
     return Scaffold(
         appBar: appBar,
-        body:outCenter
+        body:SingleChildScrollView(child: outCenter,)
     );
   }else{
     return const Center(child: SizedBox(child: CircularProgressIndicator(),),);

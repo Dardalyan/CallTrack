@@ -69,8 +69,6 @@ class _RegisterPage extends State<RegisterPage>{
             ],
           );
         });
-      }else{
-        print("Passwords are not matched !");
       }
       if(!email.contains('@')){
         showDialog(context: context, builder: (BuildContext context) {
