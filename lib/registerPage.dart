@@ -1,7 +1,8 @@
+import 'package:caltrack/backend/requests.dart';
 import 'package:caltrack/initialUserInfo.dart';
-import 'package:caltrack/mainPage.dart';
-import 'package:caltrack/userTargetPage.dart';
+import 'package:caltrack/loginPage.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class RegisterPage extends StatefulWidget{
   const RegisterPage({super.key});
@@ -9,7 +10,7 @@ class RegisterPage extends StatefulWidget{
 
   @override
   State<StatefulWidget> createState() {
-      return _RegisterPage();
+    return _RegisterPage();
   }
 }
 
@@ -20,6 +21,8 @@ class _RegisterPage extends State<RegisterPage>{
   late  Center center;
   late Column column;
 
+  late Container nameContainer;
+  late Container surNameContainer;
   late Container inUserContainer;
   late Container inPassContainer;
   late Container inPassCheckContainer;
@@ -34,19 +37,112 @@ class _RegisterPage extends State<RegisterPage>{
 
   late Container titleContainer;
 
-  late TextField usernameInput;
+  late TextField nameInput;
+  late TextField surNameInput;
+  late TextField emailInput;
   late TextField passwordInput;
   late TextField passwordCheckInput;
-
+  String name = "";
+  String surname = "";
+  String password = "";
+  String password2 = "";
+  String email = "";
 
   late Title pageTitle;
 
 
-  void registerNewUSer(){
-    Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) =>  const InitialUserInfoPage(),
-        ));
+  void registerNewUSer()async{
+
+    if(name != "" && surname != "" && email != "" && password != ""){
+      if(password != password2){
+        showDialog(context: context, builder: (BuildContext context) {
+          return AlertDialog(
+            title:  Text("Alert"),
+            content:  Text("Your passwords are not matched !"),
+            actions: [
+              TextButton(
+                child: const Text("GOT IT !"),
+                onPressed: () { Navigator.pop(context);},
+              ),
+            ],
+          );
+        });
+      }else{
+        print("Passwords are not matched !");
+      }
+      if(!email.contains('@')){
+        showDialog(context: context, builder: (BuildContext context) {
+          return AlertDialog(
+            title:  Text("Alert"),
+            content:  Text("Please enter a valid email adress !"),
+            actions: [
+              TextButton(
+                child: const Text("GOT IT !"),
+                onPressed: () { Navigator.pop(context);},
+              ),
+            ],
+          );
+        });
+
+      }
+      if(password == password2 && password.length < 6){
+        showDialog(context: context, builder: (BuildContext context) {
+          return AlertDialog(
+            title:  Text("Alert"),
+            content:  Text("Your password must include at least 6 characters !"),
+            actions: [
+              TextButton(
+                child: const Text("GOT IT !"),
+                onPressed: () { Navigator.pop(context);},
+              ),
+            ],
+          );
+        });
+      }
+    }else{
+      showDialog(context: context, builder: (BuildContext context) {
+        return AlertDialog(
+          title:  const Text("Alert"),
+          content:  const Text("Please fill all the boxes !"),
+          actions: [
+            TextButton(
+              child: const Text("GOT IT !"),
+              onPressed: () { Navigator.pop(context);},
+            ),
+          ],
+        );
+      });
+    }
+
+    if(name != "" && surname != "" && email != "" && password != ""){
+      if(password == password2){
+        if(password.length >= 6){
+          if(email.contains('@')){
+            Response response = await register(name, surname, email, password);
+            if(response.statusCode == 200){
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  const LoginPage(),
+                  ));
+            }else{
+              showDialog(context: context, builder: (BuildContext context) {
+                return AlertDialog(
+                  title:  const Text("Alert"),
+                  content:  const Text("The email might be already used !"),
+                  actions: [
+                    TextButton(
+                      child: const Text("GOT IT !"),
+                      onPressed: () { Navigator.pop(context);},
+                    ),
+                  ],
+                );
+              });
+            }
+          }
+        }
+      }
+    }
+
   }
 
   void goBackToLoginPage(){
@@ -65,13 +161,27 @@ class _RegisterPage extends State<RegisterPage>{
 
 
     // INPUT FIELDS
-      usernameInput = const TextField(
-          decoration:InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your User Name'));
-      passwordInput = const TextField(
-          decoration:InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your Password'),
+    nameInput =  TextField(onChanged: (value){
+        name = value;
+    },
+        decoration:const InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your Name'));
+    surNameInput =  TextField(onChanged: (value){
+      surname = value;
+    },
+        decoration:const InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your Surname'));
+      emailInput =  TextField(onChanged: (value){
+        email = value;
+    },
+          decoration:const InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your Email'));
+      passwordInput =  TextField(onChanged: (value){
+        password = value;
+    },
+          decoration:const InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your Password'),
           obscureText: true);
-      passwordCheckInput = const TextField(
-        decoration:InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your Password Again'),
+      passwordCheckInput =  TextField(onChanged: (value){
+        password2 = value;
+    },
+        decoration:const InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your Password Again'),
         obscureText: true);
 
       // REGISTER AND GO BACK TO LOGIN PAGE BUTTONS
@@ -89,7 +199,9 @@ class _RegisterPage extends State<RegisterPage>{
 
       // CONTAINERS TO HOLD BUTTONS INPUT FIELDS AND TITLE
       titleContainer = Container(margin: const EdgeInsets.fromLTRB(10, 0, 10, 50),child:pageTitle);
-      inUserContainer = Container(margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),child: usernameInput);
+      nameContainer = Container(margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),child: nameInput);
+      surNameContainer = Container(margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),child: surNameInput);
+      inUserContainer = Container(margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),child: emailInput);
       inPassContainer = Container(margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),child: passwordInput);
       inPassCheckContainer = Container(margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),child: passwordCheckInput);
       buttonsContainer = Container(margin: const EdgeInsets.fromLTRB(10, 20, 10, 0) ,child:buttonsColumn);
@@ -97,7 +209,7 @@ class _RegisterPage extends State<RegisterPage>{
 
     // COLUMN WIDGET TO HOLD VERTICALLY
     column =   Column(mainAxisAlignment: MainAxisAlignment.center,
-          children: [titleContainer,inUserContainer,inPassContainer,inPassCheckContainer,buttonsContainer]);
+          children: [titleContainer,nameContainer,surNameContainer,inUserContainer,inPassContainer,inPassCheckContainer,buttonsContainer]);
 
 
     // CENTER WIDGET TO SET COLUMN AT THE CENTER OF SCAFFOLD

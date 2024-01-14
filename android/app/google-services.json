@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "169871181580",
+    "project_id": "caltrack-6e3fc",
+    "storage_bucket": "caltrack-6e3fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:169871181580:android:ac0fd001c231f7bb0e6b29",
+        "android_client_info": {
+          "package_name": "com.example.caltrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAmxBm64PWxwI9AzZsYxsKlLdFDxW_3c4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

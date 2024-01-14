@@ -1,8 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:caltrack/backend/requests.dart';
 import 'package:caltrack/initialUserInfo.dart';
 import 'package:caltrack/mainPage.dart';
 import 'package:caltrack/registerPage.dart';
-import 'package:caltrack/userTargetPage.dart';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class LoginPage extends StatefulWidget{
   const LoginPage({super.key});
@@ -33,17 +38,60 @@ class _LoginPage extends State<LoginPage>{
 
    late Container titleContainer;
 
-   late TextField usernameInput;
+   late TextField emailInput;
+   String email="";
    late TextField passwordInput;
+   String password="";
 
    late Title pageTitle;
 
+   //ALERT BUTTON
+   late Widget okButton = TextButton(
+     child: const Text("GOT IT !"),
+     onPressed: () { Navigator.pop(context);},
+   );
+
+   // set up the AlertDialog
+   late AlertDialog alert = AlertDialog(
+     title: const Text("Alert"),
+     content: const Text("Email Or Password is Invalid !"),
+     actions: [
+       okButton,
+     ],
+   );
+
   // LOGIN BUTTON'S FUNCTION
-   void loginViaInput(){
-     Navigator.push(
-         context,
-         MaterialPageRoute(builder: (context) =>  const MainPage(),
-         ));
+   void loginViaInput()async{
+
+
+     Response response = await login(email, password);
+     var jsonResponse = jsonDecode(response.body);
+
+     if(response.statusCode == 200){
+       token = jsonResponse['token'];
+       Navigator.push(
+           context,
+           MaterialPageRoute(builder: (context) =>  const MainPage(),
+           ));
+     }
+
+     if(response.statusCode == 400){
+       token = jsonResponse['token'];
+
+       Navigator.push(
+           context,
+           MaterialPageRoute(builder: (context) =>  const InitialUserInfoPage(),
+           ));
+     }
+
+     if(response.statusCode == 401){
+       showDialog(context: context, builder: (BuildContext context) {
+         return alert;
+       });
+     }
+
+
+
    }
 
    // REGISTER BUTTON'S FUNCTION
@@ -63,9 +111,17 @@ class _LoginPage extends State<LoginPage>{
                fontWeight: FontWeight.w800)));
 
        // INPUT FIELDS
-       usernameInput = const TextField(
-           decoration:InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your User Name'));
-       passwordInput = const TextField(
+       emailInput = TextField(onChanged: (value){
+         setState(() {
+            email = value;
+         });
+       },
+           decoration:const InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your Email'),);
+       passwordInput =  TextField(onChanged: (value){
+         setState(() {
+            password = value;
+         });
+       },
            decoration:InputDecoration(border:OutlineInputBorder(),hintText: 'Enter Your Password'),
            obscureText: true);
 
@@ -85,7 +141,7 @@ class _LoginPage extends State<LoginPage>{
 
        // CONTAINERS TO HOLD BUTTONS INPUT FIELDS AND TITLE
        titleContainer = Container(margin: const EdgeInsets.fromLTRB(10, 0, 10, 50),child:pageTitle);
-       inUserContainer = Container(margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),child: usernameInput);
+       inUserContainer = Container(margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),child: emailInput);
        inPassContainer = Container(margin: const EdgeInsets.symmetric(horizontal: 20,vertical: 5),child: passwordInput);
        buttonsContainer = Container(margin: const EdgeInsets.fromLTRB(10, 20, 10, 0) ,child:buttonsColumn);
 
