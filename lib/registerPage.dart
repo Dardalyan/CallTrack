@@ -1,5 +1,4 @@
 import 'package:caltrack/backend/requests.dart';
-import 'package:caltrack/initialUserInfo.dart';
 import 'package:caltrack/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';

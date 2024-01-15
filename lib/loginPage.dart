@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:caltrack/backend/requests.dart';
 import 'package:caltrack/initialUserInfo.dart';
