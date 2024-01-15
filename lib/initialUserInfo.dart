@@ -279,7 +279,6 @@ class _InitialUserInfoPage extends State<InitialUserInfoPage>{
       Column ageColumn = Column(mainAxisAlignment: MainAxisAlignment.center,
         children: [Container(child: ageLabel,),Container(margin: const EdgeInsets.fromLTRB(0,10,0,0),child: ageButton,)],);
 
-
       // GENDER
       Text genderLabel = const Text("Gender",style:TextStyle(color:Colors.blue,fontSize:20,fontWeight: FontWeight.w600,
           decoration: TextDecoration.underline));
@@ -294,7 +293,6 @@ class _InitialUserInfoPage extends State<InitialUserInfoPage>{
       });
       Row genderRow = Row(children: [Flexible(child:genderMaleButton),Flexible(child: genderFemaleButton)],);
       Column genderCol = Column(children: [genderLabel,genderRow],);
-
 
       // WEIGHT
       Text weightLabel = const Text("Weight",style:TextStyle(color:Colors.blue,fontSize:20,fontWeight: FontWeight.w600,
